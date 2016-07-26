@@ -9,9 +9,21 @@ namespace AppLauncherForChrome {
 
         static Chrome () {
             ExePath = Utils.GetPathForExe( "chrome.exe" );
-            User = new List<string>();
-            UserName = new List<string>();
+            Users = new List<string>();
+            UserNames = new List<string>();
+
+
         }
+
+        /// <summary>
+        /// Contains the list of all of chrome's user profile names
+        /// </summary>
+        public static List<string> Users { get; private set; }
+
+        /// <summary>
+        /// Contains the list of all of chrome's user names
+        /// </summary>
+        public static List<string> UserNames { get; private set; }
 
         /// <summary>
         /// Returns the full path of the chrome executable
@@ -31,15 +43,7 @@ namespace AppLauncherForChrome {
             }
         }
 
-        /// <summary>
-        /// Contains the list of all of chrome's user profile names
-        /// </summary>
-        public static List<string> User { get; private set; }
-
-        /// <summary>
-        /// Contains the list of all of chrome's user names
-        /// </summary>
-        public static List<string> UserName { get; private set; }
+        
 
     }
 }

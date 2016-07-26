@@ -38,7 +38,7 @@ namespace AppLauncherForChrome {
             mshtml.IHTMLDocument2 dom = (mshtml.IHTMLDocument2)wb.Document;
             dom.body.style.overflow = "hidden";
 
-            // remove  unneccesery elements
+            // remove the unneccesery elements from the google website
             dynamic d = ((mshtml.IHTMLDocument3) wb.Document).getElementById( "searchform" );
             d.parentNode.removeChild( d );
             d = ( ( mshtml.IHTMLDocument3 ) wb.Document ).getElementById( "prm-pt" );
@@ -61,7 +61,7 @@ namespace AppLauncherForChrome {
             // scroll into view and anchor to the top
             //( ( mshtml.IHTMLDocument3 ) wb.Document ).getElementById( "hplogo" ).scrollIntoView( false );
 
-            // make the logo visible after loading and removeing
+            // make the logo visible after loading and removing
             ( sender as WebBrowser ).Visibility = Visibility.Visible;
         }
 
