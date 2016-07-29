@@ -13,6 +13,33 @@
         MaxWidth="800"
         MinWidth="800"
         Title="MainWindow" Height="820" Width="800">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type local:ChromeApp}">
+            <StackPanel Name="SingleChromeApp" 
+                        Margin="15" 
+                        ToolTip="{Binding Path=Name}" 
+                        FocusVisualStyle="{x:Null}">
+
+                <Image Name="SingleChromeAppIcon" 
+                       Source="{Binding Path=IconImage}"
+                       Width="64" 
+                       Height="64" 
+                       FocusVisualStyle="{x:Null}"/>
+                
+                <Border BorderBrush="{x:Null}">
+                    <TextBlock Name="SingleChromeAppName"
+                               Text="{Binding Path=Name}"
+                               TextAlignment="Center"
+                               TextWrapping="NoWrap"
+                               Margin="0,10,0,0"
+                               FocusVisualStyle="{x:Null}"/>
+                </Border>
+            
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid>
         <ComboBox
             Name="ComboBoxChromeUser"
@@ -22,7 +49,7 @@
             Width="150"
             Height="20"
             SelectionChanged="ComboBoxChromeUser_SelectionChanged"/>
-        
+
         <Grid Name="MainGrid" Width="628" HorizontalAlignment="Center" Margin="0,40,0,40">
             <StackPanel>
                 <WebBrowser
@@ -56,6 +83,31 @@
                         TextChanged="TextBoxSearchField_TextChanged"
                         KeyDown="TextBoxSearchField_KeyDown"/>
                 </Border>
+
+                <TextBlock Name="TextBlockSearchSuggetion" 
+                           Text="Hit Enter to search" 
+                           Margin="30, 0, 30, 0"
+                           Visibility="Collapsed"
+                           FontSize="18"
+                           Foreground="Gray"/>
+
+                <Grid Name="GridAppList">
+                    <ListBox Name="ListBoxAppList"
+                             VerticalContentAlignment="Top"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             BorderBrush="{x:Null}">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                </Grid>
 
             </StackPanel>
         </Grid>

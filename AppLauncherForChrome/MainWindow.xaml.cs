@@ -28,6 +28,7 @@ namespace AppLauncherForChrome {
             Brush b = (Brush)bc.ConvertFrom("#F2F2F2");
             b.Freeze();
             this.Background = b;
+
         }
 
         private void MainWebView_LoadCompleted ( object sender, NavigationEventArgs e ) {
