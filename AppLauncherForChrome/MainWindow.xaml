@@ -33,6 +33,7 @@
                                TextAlignment="Center"
                                TextWrapping="NoWrap"
                                Margin="0,10,0,0"
+                               Width="{Binding ActualWidth, ElementName=SingleChromeApp}"
                                FocusVisualStyle="{x:Null}"/>
                 </Border>
             
