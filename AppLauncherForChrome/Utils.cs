@@ -29,9 +29,23 @@ namespace AppLauncherForChrome {
             return ( string ) result;
         }
 
-        
+        public static void HideScriptErrors ( System.Windows.Controls.WebBrowser wb, bool Hide ) {
 
-        
+            // http://stackoverflow.com/a/3190790
+            // by Wolf5
+
+            System.Reflection.FieldInfo fiComWebBrowser 
+                = typeof(System.Windows.Controls.WebBrowser).GetField(
+                                                            "_axIWebBrowser2", 
+                                                            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+
+            if ( fiComWebBrowser == null ) return;
+            object objComWebBrowser = fiComWebBrowser.GetValue(wb);
+            if ( objComWebBrowser == null ) return;
+            objComWebBrowser.GetType().InvokeMember( "Silent", System.Reflection.BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide } );
+        }
+
+
 
 
     }

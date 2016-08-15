@@ -29,6 +29,19 @@ namespace AppLauncherForChrome {
             b.Freeze();
             this.Background = b;
 
+            // Initialize for chrome stable 
+            Chrome chromeStable = new Chrome();
+
+            // List all user names
+            ComboBoxChromeUser.ItemsSource = chromeStable.GetUserNames();
+            ComboBoxChromeUser.SelectedIndex = 0;
+            
+            // for testing 
+            ComboBoxChromeUser.SelectedValue = "Ibrahim Al-Alali";
+
+            // List the apps ordered by the usage counter by descending order, then take the first 12 items
+            ListBoxAppList.ItemsSource = chromeStable.ChromeAppsCollection.OrderByDescending( x => x.Counter ).Take( 12 );
+
         }
 
         private void MainWebView_LoadCompleted ( object sender, NavigationEventArgs e ) {
@@ -62,11 +75,18 @@ namespace AppLauncherForChrome {
             // scroll into view and anchor to the top
             //( ( mshtml.IHTMLDocument3 ) wb.Document ).getElementById( "hplogo" ).scrollIntoView( false );
 
+            // Hides the script error masseges
+            Utils.HideScriptErrors( sender as WebBrowser, true );
+
             // make the logo visible after loading and removing
             ( sender as WebBrowser ).Visibility = Visibility.Visible;
         }
 
         private void ComboBoxChromeUser_SelectionChanged ( object sender, SelectionChangedEventArgs e ) {
+            string selectedUser = ( sender as ComboBox ).SelectedItem as String;
+
+
+
 
         }
 

@@ -11,7 +11,8 @@ namespace AppLauncherForChrome {
             ExePath = Utils.GetPathForExe( "chrome.exe" );
             Users = GetUsers();
             UserNames = GetUserNames();
-
+            ChromeAppsUsageCounter = new Dictionary<string, int>();
+            InitializeAppList( "Default" );
         }
 
         /// <summary>
@@ -38,11 +39,6 @@ namespace AppLauncherForChrome {
         /// Gets a list of all chrome apps of a user with usage counter
         /// </summary>
         public Dictionary<string, int> ChromeAppsUsageCounter { get; private set; }
-
-        /// <summary>
-        /// Gets the folder path of user
-        /// </summary>
-        public string PathToUserFolder { get; private set; }
 
         /// <summary>
         /// Gets the maximum number of all app launches 
@@ -120,22 +116,22 @@ namespace AppLauncherForChrome {
             return u;
         }
 
-        public void InitializeAppList ( string pathToUserFolder ) {
-            PathToUserFolder = pathToUserFolder;
+        public void InitializeAppList ( string profileName ) {
             ChromeAppsCollection = new List<ChromeApp>();
 
-            string pathToUserApps = System.IO.Path.Combine(PathToUserFolder, "Web Applications\\");
+            string pathToUserApps = System.IO.Path.Combine(UserDataPath, profileName, "Web Applications\\");
             System.IO.DirectoryInfo chromeUserAppsDirInfo = new System.IO.DirectoryInfo( pathToUserApps );
 
             ChromeApp ca;
             foreach ( var item in chromeUserAppsDirInfo.GetDirectories() ) {
-
+                ca = PopulateChromeAppInfo( item );
+                ChromeAppsCollection.Add( ca );
             }
 
 
         }
 
-        public ChromeApp PopulateChromeAppInfo ( System.IO.DirectoryInfo folder ) {
+        private ChromeApp PopulateChromeAppInfo ( System.IO.DirectoryInfo folder ) {
             ChromeApp ca = new ChromeApp();
             ca.ID = folder.Name.Substring( 5 );
             System.IO.FileInfo[] fi = folder.GetFiles();
