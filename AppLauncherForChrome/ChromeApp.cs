@@ -42,7 +42,7 @@ namespace AppLauncherForChrome {
         /// <summary>
         /// Gets the number of times this app was launched
         /// </summary>
-        public int Counter { get; private set; }
+        public int Counter { get; set; }
 
         /// <summary>
         /// Gets the icon image
@@ -50,21 +50,13 @@ namespace AppLauncherForChrome {
         public System.Windows.Media.Imaging.BitmapImage IconImage { get; private set; }
 
         /// <summary>
-        /// Gets the maximum number of all app launches 
-        /// </summary>
-        public static int MaxCounter { get; private set; }
-
-        /// <summary>
-        /// Gets the minimum number of all app launches
-        /// </summary>
-        public static int MinCounter { get; private set; }
-
-        /// <summary>
         /// Increase the counter of this app by one
         /// </summary>
         public void IncreaseCounterByOne () {
             Counter++;
         }
+
+        
 
     }
 }

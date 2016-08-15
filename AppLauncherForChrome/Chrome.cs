@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AppLauncherForChrome {
-    static class Chrome {
+    class Chrome {
 
-        static Chrome () {
+        public Chrome () {
             ExePath = Utils.GetPathForExe( "chrome.exe" );
             Users = GetUsers();
             UserNames = GetUserNames();
@@ -17,22 +17,47 @@ namespace AppLauncherForChrome {
         /// <summary>
         /// Contains the list of all of chrome's user profile names
         /// </summary>
-        public static List<string> Users { get; private set; }
+        public List<string> Users { get; private set; }
 
         /// <summary>
         /// Contains the list of all of chrome's user names
         /// </summary>
-        public static List<string> UserNames { get; private set; }
+        public List<string> UserNames { get; private set; }
 
         /// <summary>
         /// Returns the full path of the chrome executable
         /// </summary>
-        public static string ExePath { get; private set; }
+        public string ExePath { get; private set; }
+
+        /// <summary>
+        /// Gets a list of all chrome apps of a user
+        /// </summary>
+        public List<ChromeApp> ChromeAppsCollection { get; private set; }
+
+        /// <summary>
+        /// Gets a list of all chrome apps of a user with usage counter
+        /// </summary>
+        public Dictionary<string, int> ChromeAppsUsageCounter { get; private set; }
+
+        /// <summary>
+        /// Gets the folder path of user
+        /// </summary>
+        public string PathToUserFolder { get; private set; }
+
+        /// <summary>
+        /// Gets the maximum number of all app launches 
+        /// </summary>
+        public static int MaxCounter { get; private set; }
+
+        /// <summary>
+        /// Gets the minimum number of all app launches
+        /// </summary>
+        public static int MinCounter { get; private set; }
 
         /// <summary>
         /// Returns the full path of chrome's user data folder
         /// </summary>
-        public static string UserDataPath
+        public string UserDataPath
         {
             get
             {
@@ -42,7 +67,7 @@ namespace AppLauncherForChrome {
             }
         }
 
-        private static List<string> GetUsers () {
+        private List<string> GetUsers () {
             List<string> u = new List<string>();
 
             System.IO.DirectoryInfo dicInf = new System.IO.DirectoryInfo( UserDataPath );
@@ -66,11 +91,10 @@ namespace AppLauncherForChrome {
         }
 
         /// <summary>
-        /// Returns chrome's user name for a given user
+        /// Returns a list of user names for all chrome users
         /// </summary>
-        /// <param name="pathToUserFolder">Path to the user folder</param>
         /// <returns></returns>
-        public static List<string> GetUserNames () {
+        public List<string> GetUserNames () {
             List<string> u = new List<string>();
 
             foreach ( var item in Users ) {
@@ -96,7 +120,46 @@ namespace AppLauncherForChrome {
             return u;
         }
 
+        public void InitializeAppList ( string pathToUserFolder ) {
+            PathToUserFolder = pathToUserFolder;
+            ChromeAppsCollection = new List<ChromeApp>();
 
+            string pathToUserApps = System.IO.Path.Combine(PathToUserFolder, "Web Applications\\");
+            System.IO.DirectoryInfo chromeUserAppsDirInfo = new System.IO.DirectoryInfo( pathToUserApps );
+
+            ChromeApp ca;
+            foreach ( var item in chromeUserAppsDirInfo.GetDirectories() ) {
+
+            }
+
+
+        }
+
+        public ChromeApp PopulateChromeAppInfo ( System.IO.DirectoryInfo folder ) {
+            ChromeApp ca = new ChromeApp();
+            ca.ID = folder.Name.Substring( 5 );
+            System.IO.FileInfo[] fi = folder.GetFiles();
+
+            // make it smarter with choosing the icon, if there is more than one
+
+            foreach ( System.IO.FileInfo item in fi ) {
+                if ( item.Name.EndsWith( ".ico" ) ) {
+                    ca.Name = item.Name.Substring( 0, item.Name.LastIndexOf( '.' ) );
+                    ca.IconPath = item.FullName;
+
+                    // Store app usage counter in the app instance, if it's exists. Otherwise add a new entry
+                    if ( ChromeAppsUsageCounter.ContainsKey( ca.ID ) ) {
+                        ca.Counter = ChromeAppsUsageCounter[ca.ID];
+                    } else {
+                        ChromeAppsUsageCounter.Add( ca.ID, 0 );
+                    }
+
+                    break;
+                }
+            }
+
+            return ca;
+        }
 
 
     }
