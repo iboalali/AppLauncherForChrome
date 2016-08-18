@@ -51,6 +51,24 @@ namespace AppLauncherForChrome {
         public static int MinCounter { get; private set; }
 
         /// <summary>
+        /// Currently selected user
+        /// </summary>
+        public string SelectedUser
+        {
+            get
+            {
+                int i = UserNames.IndexOf(selectedUser);
+                return Users.ElementAt( i );
+            }
+            set
+            {
+                selectedUser = value;
+            }
+        }
+
+        private string selectedUser;
+
+        /// <summary>
         /// Returns the full path of chrome's user data folder
         /// </summary>
         public string UserDataPath

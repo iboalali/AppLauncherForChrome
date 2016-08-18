@@ -38,7 +38,7 @@ namespace AppLauncherForChrome {
             // List all user names
             ComboBoxChromeUser.ItemsSource = chromeStable.GetUserNames();
             //ComboBoxChromeUser.SelectedIndex = 0;
-            
+
             // Load the last used user name
             // for testing 
             ComboBoxChromeUser.SelectedValue = "Ibrahim Al-Alali";
@@ -46,6 +46,12 @@ namespace AppLauncherForChrome {
             // List the apps ordered by the usage counter by descending order, then take the first 12 items
             ListBoxAppList.ItemsSource = chromeStable.ChromeAppsCollection.OrderByDescending( x => x.Counter ).Take( 12 );
 
+            EventManager.RegisterClassHandler( typeof( ListBoxItem ),
+                ListBoxItem.MouseLeftButtonDownEvent,
+                new RoutedEventHandler( OnMouseLeftButtonDown ) );
+
+
+            TextBoxSearchField.Focus();
         }
 
         private void MainWebView_LoadCompleted ( object sender, NavigationEventArgs e ) {
@@ -86,9 +92,19 @@ namespace AppLauncherForChrome {
             ( sender as WebBrowser ).Visibility = Visibility.Visible;
         }
 
-        private void ComboBoxChromeUser_SelectionChanged ( object sender, SelectionChangedEventArgs e ) {
-            string selectedUser = ( sender as ComboBox ).SelectedItem as String;
 
+
+        private void ComboBoxChromeUser_SelectionChanged ( object sender, SelectionChangedEventArgs e ) {
+            chromeStable.SelectedUser = ( sender as ComboBox ).SelectedItem as String;
+
+
+            if ( TextBoxSearchField.Text == string.Empty ) {
+                ListBoxAppList.ItemsSource = chromeStable.ChromeAppsCollection
+                    .OrderByDescending( x => x.Counter ).Take( 12 );
+            } else {
+                ListBoxAppList.ItemsSource = chromeStable.ChromeAppsCollection
+                    .Where( x => x.Name.ToUpper().Contains( TextBoxSearchField.Text.ToUpper() ) ).Take( 12 );
+            }
 
 
 
@@ -104,7 +120,35 @@ namespace AppLauncherForChrome {
         }
 
         private void TextBoxSearchField_KeyDown ( object sender, KeyEventArgs e ) {
+            if ( e.Key == Key.Enter ) {
+                if ( TextBoxSearchField.Text != string.Empty ) {
+                    if ( ListBoxAppList.Items.Count != 0 ) {
+                        ListBoxItem lbi = ListBoxAppList.ItemContainerGenerator.ContainerFromIndex(0) as ListBoxItem;
+                        OnMouseLeftButtonDown( lbi, null );
+                    } else {
+                        System.Diagnostics.Process.Start( chromeStable.ExePath, "\"? " + ( sender as TextBox ).Text + "\"" );
 
+                    }
+                }
+
+            }
         }
+
+        private void OnMouseLeftButtonDown ( object sender, RoutedEventArgs e ) {
+            if ( sender.GetType() == typeof( ListBoxItem ) ) {
+                ListBoxItem lbi = sender as ListBoxItem;
+
+                System.Diagnostics.Process chromeExe = new System.Diagnostics.Process();
+                chromeExe.StartInfo.FileName = chromeStable.ExePath;
+                chromeExe.StartInfo.Arguments = string.Format( "--profile-directory=\"{0}\" --app-id=", chromeStable.SelectedUser ) + ( lbi.Content as ChromeApp ).ID;
+
+                bool result = chromeExe.Start();
+
+                // increase counter of chrome app
+            }
+        }
+
+
+
     }
 }
