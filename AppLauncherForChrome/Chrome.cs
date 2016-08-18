@@ -12,6 +12,8 @@ namespace AppLauncherForChrome {
             Users = GetUsers();
             UserNames = GetUserNames();
             ChromeAppsUsageCounter = new Dictionary<string, int>();
+
+            // Initialize with the last user
             InitializeAppList( "Default" );
         }
 
@@ -62,6 +64,8 @@ namespace AppLauncherForChrome {
             }
             set
             {
+                int i = UserNames.IndexOf( value );
+                InitializeAppList( Users.ElementAt( i ) );
                 selectedUser = value;
             }
         }

@@ -37,11 +37,11 @@ namespace AppLauncherForChrome {
 
             // List all user names
             ComboBoxChromeUser.ItemsSource = chromeStable.GetUserNames();
-            //ComboBoxChromeUser.SelectedIndex = 0;
+            ComboBoxChromeUser.SelectedIndex = 0;
 
             // Load the last used user name
             // for testing 
-            ComboBoxChromeUser.SelectedValue = "Ibrahim Al-Alali";
+            //ComboBoxChromeUser.SelectedValue = "Ibrahim Al-Alali";
 
             // List the apps ordered by the usage counter by descending order, then take the first 12 items
             ListBoxAppList.ItemsSource = chromeStable.ChromeAppsCollection.OrderByDescending( x => x.Counter ).Take( 12 );
@@ -146,6 +146,12 @@ namespace AppLauncherForChrome {
 
                 // increase counter of chrome app
             }
+        }
+
+        protected override void OnDeactivated ( EventArgs e ) {
+            base.OnDeactivated( e );
+            Environment.Exit( Environment.ExitCode );
+
         }
 
 

@@ -23,8 +23,9 @@ namespace AppLauncherForChrome {
             object result = null;
             if ( fileKey != null ) {
                 result = fileKey.GetValue( string.Empty );
+                fileKey.Close();
             }
-            fileKey.Close();
+
 
             return ( string ) result;
         }
@@ -34,9 +35,9 @@ namespace AppLauncherForChrome {
             // http://stackoverflow.com/a/3190790
             // by Wolf5
 
-            System.Reflection.FieldInfo fiComWebBrowser 
+            System.Reflection.FieldInfo fiComWebBrowser
                 = typeof(System.Windows.Controls.WebBrowser).GetField(
-                                                            "_axIWebBrowser2", 
+                                                            "_axIWebBrowser2",
                                                             System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
 
             if ( fiComWebBrowser == null ) return;

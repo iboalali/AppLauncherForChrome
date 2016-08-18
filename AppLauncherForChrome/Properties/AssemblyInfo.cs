@@ -7,13 +7,13 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle( "AppLauncherForChrome" )]
+[assembly: AssemblyTitle( "App Launcher for Chrome" )]
 [assembly: AssemblyDescription( "" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "" )]
 [assembly: AssemblyProduct( "AppLauncherForChrome" )]
 [assembly: AssemblyCopyright( "Copyright ©  2016" )]
-[assembly: AssemblyTrademark( "" )]
+[assembly: AssemblyTrademark( "iboalali" )]
 [assembly: AssemblyCulture( "" )]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
