@@ -18,6 +18,8 @@ namespace AppLauncherForChrome {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        private Chrome chromeStable;
+
         public MainWindow () {
             InitializeComponent();
 
@@ -28,14 +30,16 @@ namespace AppLauncherForChrome {
             Brush b = (Brush)bc.ConvertFrom("#F2F2F2");
             b.Freeze();
             this.Background = b;
+            ListBoxAppList.Background = b;
 
             // Initialize for chrome stable 
-            Chrome chromeStable = new Chrome();
+            chromeStable = new Chrome();
 
             // List all user names
             ComboBoxChromeUser.ItemsSource = chromeStable.GetUserNames();
-            ComboBoxChromeUser.SelectedIndex = 0;
+            //ComboBoxChromeUser.SelectedIndex = 0;
             
+            // Load the last used user name
             // for testing 
             ComboBoxChromeUser.SelectedValue = "Ibrahim Al-Alali";
 
@@ -49,7 +53,7 @@ namespace AppLauncherForChrome {
             wb.LoadCompleted -= MainWebView_LoadCompleted;
 
             // Hide scrollbars
-            mshtml.IHTMLDocument2 dom = (mshtml.IHTMLDocument2)wb.Document;
+            mshtml.IHTMLDocument2 dom = (mshtml.IHTMLDocument2) wb.Document;
             dom.body.style.overflow = "hidden";
 
             // remove the unneccesery elements from the google website
@@ -91,7 +95,12 @@ namespace AppLauncherForChrome {
         }
 
         private void TextBoxSearchField_TextChanged ( object sender, TextChangedEventArgs e ) {
-
+            if ( TextBoxSearchField.Text == string.Empty ) {
+                ListBoxAppList.ItemsSource = chromeStable.ChromeAppsCollection.OrderByDescending( x => x.Counter ).Take( 12 );
+            } else {
+                ListBoxAppList.ItemsSource = chromeStable.ChromeAppsCollection
+                    .Where( x => x.Name.ToUpper().Contains( TextBoxSearchField.Text.ToUpper() ) );
+            }
         }
 
         private void TextBoxSearchField_KeyDown ( object sender, KeyEventArgs e ) {

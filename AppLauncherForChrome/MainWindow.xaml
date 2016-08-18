@@ -8,11 +8,11 @@
         WindowStyle="None"
         AllowsTransparency="False"
         WindowStartupLocation="CenterScreen"
-        MaxHeight="820"
-        MinHeight="820"
+        MaxHeight="730"
+        MinHeight="730"
         MaxWidth="800"
         MinWidth="800"
-        Title="MainWindow" Height="820" Width="800">
+        Title="MainWindow" Height="730" Width="800">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type local:ChromeApp}">
@@ -92,7 +92,7 @@
                            FontSize="18"
                            Foreground="Gray"/>
 
-                <Grid Name="GridAppList">
+                <Grid Name="GridAppList" >
                     <ListBox Name="ListBoxAppList"
                              VerticalContentAlignment="Top"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
