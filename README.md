@@ -1,15 +1,22 @@
+![logo](http://i.imgur.com/NuX69rxs.png)
 # App Launcher for Chrome
 
-This launcher lists all chrome apps and webpage shortcut you created within chrome
+This launcher lists the top 12 most used chrome apps and webpage shortcut you created within chrome
+
+![preview](http://i.imgur.com/vcVzMQmm.png)
 
 #####Copyright © 2016 iboalali
 
 To-Do list
-- [ ] Better more inteligent search
-- [ ] Better more inteligent search
-- [ ] Better more inteligent search
-- [ ] Better more inteligent search
-- [x] list syntax required
+- [x] ~~Basic search~~
+- [x] ~~Search with Google on your default browser~~
+- [x] ~~Show Google doodles~~
+- [ ] Sort the app by usage
+- [ ] Show a Google logo before loading a doodle
+- [ ] Save last selected user, and load it at the next start
+- [ ] Support other chrome channels
+- [ ] Add a button to show all installed apps
+- [ ] Pin this app to the taskbar
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
