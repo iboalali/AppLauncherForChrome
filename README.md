@@ -11,7 +11,7 @@ To-Do list
 - [x] ~~Basic search~~
 - [x] ~~Search with Google on your default browser~~
 - [x] ~~Show Google doodles~~
-- [ ] Sort the app by usage
+- [ ] Sort apps by most used
 - [ ] Show a Google logo before loading a doodle
 - [ ] Save last selected user, and load it at the next start
 - [ ] Support other chrome channels
