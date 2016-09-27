@@ -64,6 +64,7 @@
     </ApplicationDefinition>
     <Compile Include="ChromeApp.cs" />
     <Compile Include="Extensions\DynamicJson.cs" />
+    <Compile Include="SaveFile.cs" />
     <Compile Include="Utils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
